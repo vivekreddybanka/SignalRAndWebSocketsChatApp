@@ -58,7 +58,7 @@
         var closeBtn = document.getElementById("CloseButton")
         var recipients = document.getElementById("recipients")
         var connID = document.getElementById("connIDLabel")
-        connectionUrl.value = "ws://localhost:5000";
+        connectionUrl.value = "ws://localhost:5155";
         connectionButtn.onclick = function() {
             stateLabel.innerHTML = "attempting to connect";
             socket = new WebSocket(connectionUrl.value);
