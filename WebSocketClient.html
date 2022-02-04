@@ -115,16 +115,16 @@
         }
         function updateState() {
             function disable() {
-                sendMessage.disable = true;
-                sendButton.disable = true;
-                closeBtn.disable = true;
-                recipients.disable = true;
+                sendMessage.disabled = true;
+                sendButton.disabled = true;
+                closeBtn.disabled = true;
+                recipients.disabled = true;
             }
             function enable() {
-                sendMessage.disable = false;
-                sendButton.disable = false;
-                closeBtn.disable = false;
-                recipients.disable = false;
+                sendMessage.disabled = false;
+                sendButton.disabled = false;
+                closeBtn.disabled = false;
+                recipients.disabled = false;
             }
             connectionUrl.disable = true;
             connectionButtn.disable = true;
@@ -148,7 +148,9 @@
                         enable();
                         break;
                     default: 
-                        stateLabel.innerHTML = "unknown Websocket state:" + htmlEscape(socket.readyState)
+                        stateLabel.innerHTML = "unknown Websocket state:" + htmlEscape(socket.readyState);
+                        disable();
+                        break;
 
                 }
                     
