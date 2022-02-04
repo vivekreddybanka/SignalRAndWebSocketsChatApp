@@ -98,11 +98,12 @@
                 alert("socket not connected");
             }
             var data = sendMessage.value;
+            debugger;
             socket.send(data);
             commsLog.innerHTML += '<tr>' + 
                     '<td>  server </td>' +
                     '<td> client </td>' +
-                    '<td>' + htmlEscape(event.data) + '</td></tr>';
+                    '<td>' + htmlEscape(data) + '</td></tr>';
         }
 
         function htmlEscape(str) {
