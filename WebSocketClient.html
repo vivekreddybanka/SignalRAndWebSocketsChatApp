@@ -87,6 +87,24 @@
             };
 
         };
+        closeBtn.onclick = function() {
+            if ( !socket || socket.OPEN) {
+                alert("socket not connected")
+            }
+            socket.close(1000, "Closing fron the client ")
+        }
+        sendButton.onclick = function() {
+            if (!socket || socket.readyState !== WebSocket.OPEN )  {
+                alert("socket not connected");
+            }
+            var data = sendMessage.value;
+            socket.send(data);
+            commsLog.innerHTML += '<tr>' + 
+                    '<td>  server </td>' +
+                    '<td> client </td>' +
+                    '<td>' + htmlEscape(event.data) + '</td></tr>';
+        }
+
         function htmlEscape(str) {
             return str.toString()
             .replace(/&/g, '&amp;')
