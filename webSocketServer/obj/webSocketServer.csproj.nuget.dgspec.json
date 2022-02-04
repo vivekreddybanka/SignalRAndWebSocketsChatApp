@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vivekreddy\\source\\repos\\SignalRAndWebSocketsChatApp\\webSocketServer\\webSocketServer.csproj": {}
+    "/home/vivek/Development/Test Projects/SignalRAndWebSocketsChatApp/webSocketServer/webSocketServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vivekreddy\\source\\repos\\SignalRAndWebSocketsChatApp\\webSocketServer\\webSocketServer.csproj": {
+    "/home/vivek/Development/Test Projects/SignalRAndWebSocketsChatApp/webSocketServer/webSocketServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vivekreddy\\source\\repos\\SignalRAndWebSocketsChatApp\\webSocketServer\\webSocketServer.csproj",
+        "projectUniqueName": "/home/vivek/Development/Test Projects/SignalRAndWebSocketsChatApp/webSocketServer/webSocketServer.csproj",
         "projectName": "webSocketServer",
-        "projectPath": "C:\\Users\\vivekreddy\\source\\repos\\SignalRAndWebSocketsChatApp\\webSocketServer\\webSocketServer.csproj",
-        "packagesPath": "C:\\Users\\vivekreddy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vivekreddy\\source\\repos\\SignalRAndWebSocketsChatApp\\webSocketServer\\obj\\",
+        "projectPath": "/home/vivek/Development/Test Projects/SignalRAndWebSocketsChatApp/webSocketServer/webSocketServer.csproj",
+        "packagesPath": "/home/vivek/.nuget/packages/",
+        "outputPath": "/home/vivek/Development/Test Projects/SignalRAndWebSocketsChatApp/webSocketServer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vivekreddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/vivek/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -57,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pzywpY75fra3iHvq5FZps69Bc9D15YGHukHLYbvn8b6oCpDJm1niOHnrSzMYKwQALMKiwCZlTfRwno/Mdqh/ww==",
+  "dgSpecHash": "przShqgk+/niG1RR3H83YnVLLMRX/kNcii3XPvYf7FvWlSZbASv0QbbnFdimYbsc6PPrKli+caDoojTYABig6A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vivekreddy\\source\\repos\\SignalRAndWebSocketsChatApp\\webSocketServer\\webSocketServer.csproj",
+  "projectFilePath": "/home/vivek/Development/Test Projects/SignalRAndWebSocketsChatApp/webSocketServer/webSocketServer.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
