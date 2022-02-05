@@ -39,6 +39,11 @@ namespace webSocketServer.Middleware
                             return;
                         }
                         else if (result.MessageType == WebSocketMessageType.Close) {
+                            string id = _manager.GetAllSockets().FirstOrDefault(s => s.Value == websocket).Key;
+                            _manager.GetAllSockets().TryRemove(id, out WebSocket sock);
+
+                            await sock.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+
                             Console.WriteLine("received Close Message");
                             return;
                         }
