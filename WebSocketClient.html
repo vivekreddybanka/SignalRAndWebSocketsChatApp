@@ -84,6 +84,7 @@
                     '<td>  server </td>' +
                     '<td> client </td>' +
                     '<td>' + htmlEscape(event.data) + '</td></tr>'
+                isConnID(event.data);
             };
 
         };
@@ -93,12 +94,25 @@
             }
             socket.close(1000, "Closing fron the client ")
         }
+
+        function isConnID(str) {
+            if(str.substring(0,7) == "ConnID:") {
+                connID.innerHTML = "ConnID:" + str.substring(8, 45);
+            }
+        }
+
+        function constructJson() {
+            return JSON.stringify({
+                "From": connID.innerHTML.substring(8, connID.innerHTML.length),
+                "To": recipients.value,
+                "Message": sendMessage.value
+            });
+        }
         sendButton.onclick = function() {
             if (!socket || socket.readyState !== WebSocket.OPEN )  {
                 alert("socket not connected");
             }
-            var data = sendMessage.value;
-            debugger;
+            var data = constructJson();
             socket.send(data);
             commsLog.innerHTML += '<tr>' + 
                     '<td>  server </td>' +
