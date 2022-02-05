@@ -4,7 +4,11 @@ using System.Threading;
 using webSocketServer.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddWebSocketManager();
+
 var app = builder.Build();
+
 // add the websockets
 app.UseWebSockets();
 app.UserWebSocketServer();

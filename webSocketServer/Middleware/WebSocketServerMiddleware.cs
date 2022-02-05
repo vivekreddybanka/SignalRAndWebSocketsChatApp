@@ -11,13 +11,19 @@ namespace webSocketServer.Middleware
     {
 
         private readonly RequestDelegate _next;
-        public WebSocketServerMiddleware(RequestDelegate next) {
+        private readonly WebsocketServerConnectionManager _manager;
+
+        public WebSocketServerMiddleware(RequestDelegate next, WebsocketServerConnectionManager manager) {
             _next = next;
+            _manager = manager;
         }
         public async Task InvokeAsync(HttpContext context ) {
             if (context.WebSockets.IsWebSocketRequest) {
                     WebSocket websocket =  await context.WebSockets.AcceptWebSocketAsync();
                     Console.WriteLine("Websocket Connected");
+                    // added the new websocket request to the manager
+                    string ConniD = _manager.AddSocket(websocket);
+
                     await ReceiveMessage(websocket,async (result, buffer) => {
 
                         if (result.MessageType == WebSocketMessageType.Text) {

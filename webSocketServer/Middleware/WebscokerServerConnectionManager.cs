@@ -16,7 +16,7 @@ namespace webSocketServer.Middleware
         public string AddSocket(WebSocket socket) {
             string ConniD = Guid.NewGuid().ToString();
             _sockets.TryAdd(ConniD,socket);
-            Console.WriteLine("Connection added" + ConniD);
+            Console.WriteLine("Connection added -> " + ConniD);
             return ConniD;
         }
 
