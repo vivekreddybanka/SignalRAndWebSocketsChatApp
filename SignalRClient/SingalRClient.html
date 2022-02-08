@@ -90,7 +90,10 @@
             //         '<td>' + htmlEscape(event.data) + '</td></tr>'
             //     isConnID(event.data);
             // };
-            hubConnection.onclose((event) => {
+           
+
+        };
+         hubConnection.onclose((event) => {
                 updateState();
                 commsLog.innerHTML += '<tr>' + 
                         "<td colspan='3'> connection stoped </td>" +
@@ -103,13 +106,12 @@
                         '</tr>';
             });
             hubConnection.on("ReceiveMessage", (message) => {
+                console.log(message)
                 commsLog.innerHTML += '<tr>' +
                     '<td>  server </td>' +
                     '<td> client </td>' +
                     '<td>' + htmlEscape(message) + '</td></tr>'
             })
-
-        };
         closeBtn.onclick = function() {
             if ( !hubConnection || hubConnection.state !== signalR.HubConnectionState.Connected) {
                 alert("Signal R Hub is  not connected")
@@ -138,7 +140,7 @@
             commsLog.innerHTML += '<tr>' + 
                     '<td>  server </td>' +
                     '<td> client </td>' +
-                    '<td>' + htmlEscape(data) + '</td></tr>';
+                    '<td>' + htmlEscape(message) + '</td></tr>';
         }
 
         function htmlEscape(str) {

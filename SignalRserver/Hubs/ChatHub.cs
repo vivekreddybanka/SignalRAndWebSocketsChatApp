@@ -17,17 +17,19 @@ namespace SignalRserver
         public async Task SendMessageAsync(string Message)
         {
             var routeob = JsonConvert.DeserializeObject<dynamic>(Message);
-            string toClient = routeob.To;
+            string toClient = routeob.To.ToString();
             Console.WriteLine("Message Recived On: " + Context.ConnectionId);
 
-            if (!string.IsNullOrEmpty(toClient))
+            if (routeob.To.ToString() == string.Empty)
             {
-
-                await Clients.Client(toClient).SendAsync("receiveMessage" + Message);
+                Console.WriteLine("Broadcast");
+                await Clients.All.SendAsync("ReceiveMessage", Message);
             }
             else
             {
-                await Clients.All.SendAsync("ReceiveMessage" + Message);
+                Console.WriteLine("Targeted on: " + toClient);
+                await Clients.Client(toClient).SendAsync("ReceiveMessage", Message);
+
             }
         }
 
