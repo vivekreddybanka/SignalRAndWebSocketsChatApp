@@ -90,6 +90,24 @@
             //         '<td>' + htmlEscape(event.data) + '</td></tr>'
             //     isConnID(event.data);
             // };
+            hubConnection.onclose((event) => {
+                updateState();
+                commsLog.innerHTML += '<tr>' + 
+                        "<td colspan='3'> connection stoped </td>" +
+                        '</tr>';
+            });
+            hubConnection.on("ReceiveClientID", (ClientID) => {
+                connID.innerHTML = "ConnID " + ClientID;
+                commsLog.innerHTML += '<tr>' + 
+                        "<td colspan='3'> Connection ID is received form the hub </td>" +
+                        '</tr>';
+            });
+            hubConnection.on("ReceiveMessage", (message) => {
+                commsLog.innerHTML += '<tr>' +
+                    '<td>  server </td>' +
+                    '<td> client </td>' +
+                    '<td>' + htmlEscape(message) + '</td></tr>'
+            })
 
         };
         closeBtn.onclick = function() {
@@ -100,13 +118,6 @@
                 console.debug("Requested stop on hub");
             })
         };
-
-        hubConnection.onclose((event) => {
-            updateState();
-             commsLog.innerHTML += '<tr>' + 
-                    "<td colspan='3'> connection stoped </td>" +
-                    '</tr>';
-        })
 
         function isConnID(str) {
             if(str.substring(0,7) == "ConnID:") {
@@ -122,11 +133,8 @@
             });
         }
         sendButton.onclick = function() {
-            if (!socket || socket.readyState !== WebSocket.OPEN )  {
-                alert("socket not connected");
-            }
-            var data = constructJson();
-            socket.send(data);
+            var message = constructJson();
+            hubConnection.invoke("SendMessageAsync", message);
             commsLog.innerHTML += '<tr>' + 
                     '<td>  server </td>' +
                     '<td> client </td>' +
