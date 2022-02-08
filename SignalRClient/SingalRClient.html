@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Signal R javascript client</title>
+        <title>Signal R javadcript client</title>
     </head>
     <body>
         <h1> Signal R Javscript Client </h1>
@@ -48,6 +48,7 @@
         </table>
         <p></p>
     </body>
+    <script src="./js/signalr/dist/browser/signalr.js"> </script>
     <script>
         var connectionUrl = document.getElementById("connectionUrl");
         var connectionButtn = document.getElementById("ConnectionButton");
@@ -58,40 +59,59 @@
         var closeBtn = document.getElementById("CloseButton")
         var recipients = document.getElementById("recipients")
         var connID = document.getElementById("connIDLabel")
-        connectionUrl.value = "http://localhost:5056/chathub";
+        connectionUrl.value = "http://localhost:5056/chatHub";
+
+        var hubConnection = new signalR.HubConnectionBuilder().withUrl(connectionUrl.value).build();
         connectionButtn.onclick = function() {
-            stateLabel.innerHTML = "attempting to connect";
-            socket = new WebSocket(connectionUrl.value);
-            socket.onopen= function(event) {
+            stateLabel.innerHTML = "attempting to connect ...";
+            hubConnection.start().then(() => {
+                console.log(hubConnection);
+                console.log(signalR);
                 updateState();
                 commsLog.innerHTML += '<tr>' + 
                     "<td colspan='3'> connection opened </td>" +
                     '</tr>';
-            };
+            });
 
-            socket.onclose = function(event){
-                updateState()
-                commsLog.innerHTML += '<tr>' + 
-                    '<td colspan="3"> connection closed. Code' + htmlEscape(event.code) + 
-                    'Reason: '+ htmlEscape(event.reason) + '</td>' +
-                    '</tr>';
-            };
+            // socket.onclose = function(event){
+            //     updateState()
+            //     commsLog.innerHTML += '<tr>' + 
+            //         '<td colspan="3"> connection closed. Code' + htmlEscape(event.code) + 
+            //         'Reason: '+ htmlEscape(event.reason) + '</td>' +
+            //         '</tr>';
+            // };
 
-            socket.onerror =  updateState();
-            socket.onerror = updateState();
-            socket.onmessage = function (event) {
-                commsLog.innerHTML += '<tr>' + 
-                    '<td>  server </td>' +
-                    '<td> client </td>' +
-                    '<td>' + htmlEscape(event.data) + '</td></tr>'
-            };
+            // socket.onerror =  updateState();
+            // socket.onerror = updateState();
+            // socket.onmessage = function (event) {
+            //     commsLog.innerHTML += '<tr>' + 
+            //         '<td>  server </td>' +
+            //         '<td> client </td>' +
+            //         '<td>' + htmlEscape(event.data) + '</td></tr>'
+            //     isConnID(event.data);
+            // };
 
         };
         closeBtn.onclick = function() {
-            if ( !socket || socket.OPEN) {
-                alert("socket not connected")
+            if ( !hubConnection || hubConnection.state !== signalR.HubConnectionState.Connected) {
+                alert("Signal R Hub is  not connected")
             }
-            socket.close(1000, "Closing fron the client ")
+            hubConnection.stop().then(() => {
+                console.debug("Requested stop on hub");
+            })
+        };
+
+        hubConnection.onclose((event) => {
+            updateState();
+             commsLog.innerHTML += '<tr>' + 
+                    "<td colspan='3'> connection stoped </td>" +
+                    '</tr>';
+        })
+
+        function isConnID(str) {
+            if(str.substring(0,7) == "ConnID:") {
+                connID.innerHTML = "ConnID:" + str.substring(8, 45);
+            }
         }
 
         function constructJson() {
@@ -136,32 +156,35 @@
             }
             connectionUrl.disable = true;
             connectionButtn.disable = true;
-            if (!socket) {
+            if (!hubConnection) {
                 disable();
             } else {
-                switch(socket.readyState){
-                    case WebSocket.CLOSED:
+                switch(hubConnection.state){
+                    case signalR.HubConnectionState.Disconnected:
                         stateLabel.innerHTML = "closed";
                         connID.innerHTML = 'connID: N/A';
                         disable();
                         connectionUrl.disable = false;
                         connectionButtn.disable = false;
                         break;
-                    case WebSocket.CLOSING: 
+                    case signalR.HubConnectionState.Disconnecting:
                         stateLabel.innerHTML = "Closing ....";
                         disable();
                         break;
-                    case WebSocket.OPEN:
+                    case signalR.HubConnectionState.Connected:
                         stateLabel.innerHTML = "Open";
                         enable();
                         break;
-                    default: 
+                    case signalR.HubConnectionState.Connecting:
+                        stateLabel.innerHTML = "Opening ....";
+                        enable();
+                        break;
+                    default:
                         stateLabel.innerHTML = "unknown Websocket state:" + htmlEscape(socket.readyState);
                         disable();
                         break;
 
                 }
-                    
             }
         }
     </script>
